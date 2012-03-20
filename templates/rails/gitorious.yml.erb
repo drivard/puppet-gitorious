@@ -1,5 +1,5 @@
 production:
-  cookie_secret: 
+  cookie_secret:
   repository_base_path: "/var/www/gitorious/repositories"
   gitorious_client_port: 80
   gitorious_client_host: <%= git_fqdn %>
@@ -7,7 +7,7 @@ production:
   gitorious_user: git
   exception_notification_emails: <%= email %>
   mangle_email_addresses: true
-  public_mode: false
+  public_mode: true
   locale: en
   archive_cache_dir: "/var/www/gitorious/tarballs"
   archive_work_dir: "/var/www/gitorious/tarballs-work"
