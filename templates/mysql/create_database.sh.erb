@@ -1,6 +1,6 @@
-#!/bin/sh -e
-MYSQLADMIN_BIN="$(which mysqladmin)";
-MYSQL_BIN="$(which mysql)";
+#!/bin/bash
+MYSQLADMIN_BIN=`which mysqladmin)`;
+MYSQL_BIN=`which mysql`;
 # Execute those commands to create the Database and the default root password
 $MYSQLADMIN_BIN -u root --host='<%= server -%>' password '<%= pwd -%>';
 $MYSQL_BIN -u root --host='<%= server -%>' --password='<%= pwd -%>' -e "CREATE USER 'git'@'%' IDENTIFIED BY '<%= git_pwd -%>';";
