@@ -102,5 +102,12 @@ class gitorious::install {
       ensure  => link,
       target  => "/usr/local/apache-activemq-5.5.1",
       require => [Exec["move-activemq-folder"],];
+      
+    "/usr/local/apache-activemq-5.5.1":
+      owner   => 'activemq',
+      group   => 'nogroup',
+      mode    => '0755',
+      ensure  => directory,
+      require => [Exec["move-activemq-folder"],];
   }
 }
