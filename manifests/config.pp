@@ -112,6 +112,21 @@ class gitorious::config {
       mode    => '0755',
       ensure  => file,
       source  => "puppet:///modules/gitorious/scripts/activemq";
+      
+    # Make this file a template for future enhancement
+    "/etc/default/activemq":
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0600',
+      ensure  => file,
+      content => template("gitorious/activemq/activemq.erb");
+      
+    "/usr/local/apache-activemq/conf/activemq.xml":
+      owner   => 'activemq',
+      group   => 'nogroup',
+      mode    => '0644',
+      ensure  => file,
+      source  => "puppet:///modules/gitorious/config/activemq/activemq.xml";
 
     "/usr/local/bin/gitorious":
       ensure  => link,
