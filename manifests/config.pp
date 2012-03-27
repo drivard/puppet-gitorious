@@ -72,13 +72,6 @@ class gitorious::config {
       target  => "/usr/local/sphinx/bin/spelldump",
       require => [File["/usr/local/sphinx"],];
 
-    "/usr/local/apache-activemq-5.5.1":
-      owner   => 'activemq',
-      group   => 'nogroup',
-      mode    => '0755',
-      ensure  => directory,
-      require => [Exec["move-activemq-folder"],];
-
     "/etc/init.d/git-poller":
       owner   => 'root',
       group   => 'root',
