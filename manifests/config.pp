@@ -243,6 +243,19 @@ class gitorious::config {
       group   => 'git',
       mode    => '0755',
       source  => "puppet:///modules/gitorious/rails/git-daemon";
+      
+    "/var/www/cron":
+      owner   => 'git',
+      group   => 'git',
+      mode    => '0755',
+      ensure  => directory;
+      
+    "/var/www/cron/gitorious.sh":
+      owner   => 'git',
+      group   => 'git',
+      mode    => '0755',
+      source  => "puppet:///modules/gitorious/config/cron/gitorious.sh",
+      require => [File["/var/www/cron"],];
   }
 
   exec {
@@ -341,13 +354,13 @@ class gitorious::config {
 
   cron {
     "git_cron_1":
-      command   => "cd /var/www/gitorious && /opt/ruby-enterprise/bin/bundle exec /opt/ruby-enterprise/bin/rake ultrasphinx:index RAILS_ENV=production",
+      command   => "/var/www/cron/gitorious.sh",
       user      => "git",
       hour      => '*',
       minute    => '*',
       month     => '*',
       monthday  => '*',
       weekday   => '*',
-      require   => [Exec["/usr/local/bin/bundle exec rake ultrasphinx:bootstrap"],];
+      require   => [Exec["/usr/local/bin/bundle exec rake ultrasphinx:bootstrap"],File["/var/www/cron/gitorious.sh"],];
   }
 }
