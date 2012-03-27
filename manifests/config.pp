@@ -259,7 +259,8 @@ class gitorious::config {
   }
 
   exec {
-    "sh /usr/src/create_database.sh >> /usr/src/database_created.log 2>&1":
+    "configure_mysql_database":
+      command => "/bin/bash /usr/src/create_database.sh >> /usr/src/database_created.log 2>&1;",
       user    => "root",
       cwd     => "/usr/src",
       creates => "/usr/src/database_created.log",
