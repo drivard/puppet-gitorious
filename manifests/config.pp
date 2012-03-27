@@ -72,12 +72,6 @@ class gitorious::config {
       target  => "/usr/local/sphinx/bin/spelldump",
       require => [File["/usr/local/sphinx"],];
 
-    "/etc/default/activemq":
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0600',
-      ensure  => file;
-
     "/usr/local/apache-activemq-5.5.1":
       owner   => 'activemq',
       group   => 'nogroup',
