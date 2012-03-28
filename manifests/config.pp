@@ -259,12 +259,6 @@ class gitorious::config {
       creates => "/usr/src/database_created.log",
       require => [File["/usr/src/create_database.sh"],];
 
-    "activemq_user":
-      command => "adduser --system --no-create-home --home /usr/local/apache-activemq --shell /bin/bash activemq >> /usr/src/activemq_user.log",
-      user    => "root",
-      creates => "/usr/src/activemq_user.log",
-      timeout => 0;
-
     "update-rc.d memcached defaults":
       user    => "root",
       creates => "/var/lib/update-rc.d/memcached";
@@ -315,6 +309,10 @@ class gitorious::config {
     "chown -R git:git /var/www/gitorious":
       user    => "root",
       require => [File[$gitorious_folders],];
+      
+    "chown -R activemq:nogroup /usr/local/apache-activemq-5.5.1":
+      user    => "root",
+      require => [File["/usr/local/apache-activemq/conf/activemq.xml"],];
 
     "/usr/local/bin/bundle pack":
       command => "su -l git -c '/usr/local/bin/bundle pack'",
