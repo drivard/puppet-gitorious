@@ -51,7 +51,7 @@ class gitorious
     "libpcre3-dev",
     "libyaml-dev",
     "libmysqlclient-dev",
-    "apache2-dev",
+    "apache2-threaded-dev",
     "libonig-dev",
     "zip",
     "unzip",
