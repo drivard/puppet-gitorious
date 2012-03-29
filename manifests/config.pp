@@ -147,7 +147,7 @@ class gitorious::config {
     "/var/www/gitorious/.ssh":
       owner   => 'git',
       group   => 'git',
-      mode    => '0755',
+      mode    => '0700',
       ensure  => directory;
 
     "/var/www/gitorious/.ssh/authorized_keys":
