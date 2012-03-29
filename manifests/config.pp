@@ -153,7 +153,7 @@ class gitorious::config {
     "/var/www/gitorious/.ssh/authorized_keys":
       owner   => 'git',
       group   => 'git',
-      mode    => '0644',
+      mode    => '0600',
       ensure  => file,
       require => [File["/var/www/gitorious/.ssh"],];
 
