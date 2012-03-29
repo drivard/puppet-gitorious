@@ -298,8 +298,9 @@ class gitorious::config {
       require => [File["/etc/apache2/sites-available/gitorious-ssl"],],
       unless  => "test -f /etc/apache2/sites-enabled/gitorious-ssl";
 
-    "su -l git -c 'git submodule update --init'":
+    "su -l git -c 'git submodule update --init' >> /usr/src/git_init.log 2>&1;":
       user    => "root",
+      creates => "/usr/src/git_init.log",
       require => [Exec["chown -R git:git /var/www/gitorious"],Exec['chmod -R go-rwx /var/www/gitorious/.ssh'],];
 
     "chmod -R go-rwx /var/www/gitorious/.ssh":
