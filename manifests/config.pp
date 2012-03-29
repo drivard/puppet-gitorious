@@ -325,20 +325,20 @@ class gitorious::config {
       command     => "su -l git -c '/usr/local/bin/bundle pack'",
       user        => "root",
       refreshonly => true,
-      subscribe   => [Exec["clone_gitorious"],
+      subscribe   => [Exec["clone_gitorious"],],
       require     => [Exec["gitorious_yml_secret"],File["/etc/profile.d/gitorious.sh"],Exec["chown -R git:git /var/www/gitorious"],Exec["chmod -R go-rwx /var/www/gitorious/.ssh"],File["/var/www/gitorious/config/boot.rb"],];
 
     "/usr/local/bin/bundle exec rake db:migrate":
       command     => "su -l git -c '/usr/local/bin/bundle exec rake db:migrate RAILS_ENV=production'",
       user        => "root",
       refreshonly => true,
-      subscribe   => [Exec["/usr/local/bin/bundle pack"],
+      subscribe   => [Exec["/usr/local/bin/bundle pack"],],
       require     => [Exec["/usr/local/bin/bundle pack"],];
 
     "/usr/local/bin/bundle exec rake ultrasphinx:bootstrap":
       command     => "su -l git -c '/usr/local/bin/bundle exec rake ultrasphinx:bootstrap RAILS_ENV=production'",
       refreshonly => true,
-      subscribe   => [Exec["/usr/local/bin/bundle pack"],
+      subscribe   => [Exec["/usr/local/bin/bundle pack"],],
       require     => [Exec["/usr/local/bin/bundle exec rake db:migrate"],];
 
       require => [File["/etc/mail/genericsdomain"],File["/etc/mail/gitorious.m4"],File["/etc/mail/sendmail.mc"],File["/etc/mail/genericstable"],];
