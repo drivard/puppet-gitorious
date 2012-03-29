@@ -304,31 +304,42 @@ class gitorious::config {
       require => [Exec["chown -R git:git /var/www/gitorious"],Exec['chmod -R go-rwx /var/www/gitorious/.ssh'],];
 
     "chmod -R go-rwx /var/www/gitorious/.ssh":
-      user    => "root",
-      require => [File["/var/www/gitorious/.ssh/authorized_keys"],];
+      user        => "root",
+      refreshonly => true,
+      subscribe   => [File["/var/www/gitorious/.ssh/authorized_keys"],],
+      require     => [File["/var/www/gitorious/.ssh/authorized_keys"],];
 
     "chown -R git:git /var/www/gitorious":
-      user    => "root",
-      require => [File[$gitorious_folders],];
+      user        => "root",
+      refreshonly => true,
+      subscribe   => [File[$gitorious_folders],],
+      require     => [File[$gitorious_folders],];
       
     "chown -R activemq:nogroup /usr/local/apache-activemq-5.5.1":
-      user    => "root",
-      require => [File["/usr/local/apache-activemq/conf/activemq.xml"],];
+      user        => "root",
+      refreshonly => true,
+      subscribe   => [File["/usr/local/apache-activemq/conf/activemq.xml"],
+      require     => [File["/usr/local/apache-activemq/conf/activemq.xml"],];
 
     "/usr/local/bin/bundle pack":
-      command => "su -l git -c '/usr/local/bin/bundle pack'",
-      user    => "root",
-      require => [Exec["gitorious_yml_secret"],File["/etc/profile.d/gitorious.sh"],Exec["chown -R git:git /var/www/gitorious"],Exec['chmod -R go-rwx /var/www/gitorious/.ssh'],File["/var/www/gitorious/config/boot.rb"],];
+      command     => "su -l git -c '/usr/local/bin/bundle pack'",
+      user        => "root",
+      refreshonly => true,
+      subscribe   => [Exec["clone_gitorious"],
+      require     => [Exec["gitorious_yml_secret"],File["/etc/profile.d/gitorious.sh"],Exec["chown -R git:git /var/www/gitorious"],Exec["chmod -R go-rwx /var/www/gitorious/.ssh"],File["/var/www/gitorious/config/boot.rb"],];
 
     "/usr/local/bin/bundle exec rake db:migrate":
-      command => "su -l git -c '/usr/local/bin/bundle exec rake db:migrate RAILS_ENV=production'",
-      user    => "root",
-      require => [Exec["/usr/local/bin/bundle pack"],];
+      command     => "su -l git -c '/usr/local/bin/bundle exec rake db:migrate RAILS_ENV=production'",
+      user        => "root",
+      refreshonly => true,
+      subscribe   => [Exec["/usr/local/bin/bundle pack"],
+      require     => [Exec["/usr/local/bin/bundle pack"],];
 
     "/usr/local/bin/bundle exec rake ultrasphinx:bootstrap":
-      command => "su -l git -c '/usr/local/bin/bundle exec rake ultrasphinx:bootstrap RAILS_ENV=production'",
-
-      require => [Exec["/usr/local/bin/bundle exec rake db:migrate"],];
+      command     => "su -l git -c '/usr/local/bin/bundle exec rake ultrasphinx:bootstrap RAILS_ENV=production'",
+      refreshonly => true,
+      subscribe   => [Exec["/usr/local/bin/bundle pack"],
+      require     => [Exec["/usr/local/bin/bundle exec rake db:migrate"],];
 
     "m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf":
       unless  => "test -f /etc/mail/genericstable.db",
