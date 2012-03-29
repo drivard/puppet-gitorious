@@ -318,7 +318,7 @@ class gitorious::config {
     "chown -R activemq:nogroup /usr/local/apache-activemq-5.5.1":
       user        => "root",
       refreshonly => true,
-      subscribe   => [File["/usr/local/apache-activemq/conf/activemq.xml"],
+      subscribe   => [File["/usr/local/apache-activemq/conf/activemq.xml"],],
       require     => [File["/usr/local/apache-activemq/conf/activemq.xml"],];
 
     "/usr/local/bin/bundle pack":
@@ -341,8 +341,6 @@ class gitorious::config {
       subscribe   => [Exec["/usr/local/bin/bundle pack"],
       require     => [Exec["/usr/local/bin/bundle exec rake db:migrate"],];
 
-    "m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf":
-      unless  => "test -f /etc/mail/genericstable.db",
       require => [File["/etc/mail/genericsdomain"],File["/etc/mail/gitorious.m4"],File["/etc/mail/sendmail.mc"],File["/etc/mail/genericstable"],];
 
     "makemap -r hash /etc/mail/genericstable.db < /etc/mail/genericstable":
