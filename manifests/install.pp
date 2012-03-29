@@ -85,16 +85,20 @@ class gitorious::install {
       require => [File["/usr/local/apache-activemq"], ];
 
     "/opt/ruby-enterprise-1.8.7-2012.02/bin/bundle pack":
-      user    => "root",
-      cwd     => "/var/www/gitorious",
-      timeout => 0,
-      require => [Exec["clone_gitorious"],Exec["yes '' | /opt/ruby-enterprise-1.8.7-2012.02/bin/passenger-install-apache2-module"],];
+      user        => "root",
+      cwd         => "/var/www/gitorious",
+      refreshonly => true,
+      subscribe   => [Exec["clone_gitorious"],],
+      timeout     => 0,
+      require     => [Exec["clone_gitorious"],Exec["yes '' | /opt/ruby-enterprise-1.8.7-2012.02/bin/passenger-install-apache2-module"],];
 
     "/opt/ruby-enterprise-1.8.7-2012.02/bin/bundle install":
-      user    => "root",
-      cwd     => "/var/www/gitorious",
-      timeout => 0,
-      require => [Exec["/opt/ruby-enterprise-1.8.7-2012.02/bin/bundle pack"], ];
+      user        => "root",
+      cwd         => "/var/www/gitorious",
+      refreshonly => true,
+      subscribe   => [Exec["/opt/ruby-enterprise-1.8.7-2012.02/bin/bundle pack"],],
+      timeout     => 0,
+      require     => [Exec["/opt/ruby-enterprise-1.8.7-2012.02/bin/bundle pack"], ];
   }
 
   file {
