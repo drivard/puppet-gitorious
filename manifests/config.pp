@@ -341,6 +341,8 @@ class gitorious::config {
       subscribe   => [Exec["/usr/local/bin/bundle pack"],],
       require     => [Exec["/usr/local/bin/bundle exec rake db:migrate"],];
 
+    "m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf":
+      unless  => "test -f /etc/mail/genericstable.db",
       require => [File["/etc/mail/genericsdomain"],File["/etc/mail/gitorious.m4"],File["/etc/mail/sendmail.mc"],File["/etc/mail/genericstable"],];
 
     "makemap -r hash /etc/mail/genericstable.db < /etc/mail/genericstable":
