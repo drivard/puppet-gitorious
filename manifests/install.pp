@@ -4,8 +4,9 @@ class gitorious::install {
       ensure => present;
 
     "raspell":
-      ensure   => present,
-      provider => "gem";
+      ensure    => present,
+      provider  => "/opt/ruby-enterprise-1.8.7-2012.02/bin/gem",
+      require   => [Exec["yes '' | /usr/src/gitorious-packages/ruby-enterprise-1.8.7-2012.02/installer"],];
   }
 
   exec {
@@ -117,5 +118,15 @@ class gitorious::install {
       mode    => '0755',
       ensure  => directory,
       require => [Exec["move-activemq-folder"],];
+      
+    "/opt/ruby-enterprise":
+      ensure  => link,
+      target  => "/opt/ruby-enterprise-1.8.7-2012.02/",
+      require => [Exec["yes '' | /usr/src/gitorious-packages/ruby-enterprise-1.8.7-2012.02/installer"],];
+
+    "/usr/local/bin/gem":
+      ensure  => link,
+      target  => "/opt/ruby-enterprise/bin/gem",
+      require => [File["/opt/ruby-enterprise"],];
   }
 }

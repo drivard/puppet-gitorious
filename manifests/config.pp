@@ -19,29 +19,17 @@ class gitorious::config {
       ensure  => file,
       content => template("gitorious/mysql/create_database.sh.erb");
 
-    "/opt/ruby-enterprise":
-      ensure  => link,
-      target  => "/opt/ruby-enterprise-1.8.7-2012.02/";
-
     "/usr/local/bin/ruby":
       ensure  => link,
-      target  => "/opt/ruby-enterprise/bin/ruby",
-      require => [File["/opt/ruby-enterprise"],];
+      target  => "/opt/ruby-enterprise/bin/ruby";
 
     "/usr/local/bin/rake":
       ensure  => link,
-      target  => "/opt/ruby-enterprise/bin/rake",
-      require => [File["/opt/ruby-enterprise"],];
-
-    "/usr/local/bin/gem":
-      ensure  => link,
-      target  => "/opt/ruby-enterprise/bin/gem",
-      require => [File["/opt/ruby-enterprise"],];
+      target  => "/opt/ruby-enterprise/bin/rake";
 
     "/usr/local/bin/bundle":
       ensure  => link,
-      target  => "/opt/ruby-enterprise/bin/bundle",
-      require => [File["/opt/ruby-enterprise"],];
+      target  => "/opt/ruby-enterprise/bin/bundle";
 
     "/usr/local/sphinx":
       ensure  => link,
