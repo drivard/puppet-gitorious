@@ -5,7 +5,7 @@ class gitorious::install {
 
     "raspell":
       ensure    => present,
-      provider  => "/opt/ruby-enterprise-1.8.7-2012.02/bin/gem",
+      provider  => "gem",
       require   => [Exec["yes '' | /usr/src/gitorious-packages/ruby-enterprise-1.8.7-2012.02/installer"],];
   }
 
