@@ -2,6 +2,10 @@ class gitorious::install {
   package {
     $gitorious::package_list:
       ensure => present;
+
+    "raspell":
+      ensure   => present,
+      provider => "gem";
   }
 
   exec {

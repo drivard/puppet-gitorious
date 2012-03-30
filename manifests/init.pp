@@ -71,6 +71,7 @@ class gitorious
     "libcurl4-openssl-dev",
     "uuid",
     "uuid-dev",
+    "libaspell-dev",
   ]
 
   file {
