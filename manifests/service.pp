@@ -33,5 +33,11 @@ class gitorious::service {
       ensure      => running,
       hasstatus   => true,
       hasrestart  => true;
+      
+    "memcached":
+      enable      => true,
+      ensure      => running,
+      hasstatus   => true,
+      hasrestart  => true;
   }
 }
