@@ -12,7 +12,7 @@ class gitorious::service {
       hasrestart  => true;
 
     "git-poller":
-      pattern     => "poller",
+      pattern     => "gitorious-poller",
       ensure      => running,
       hasrestart  => true;
 
