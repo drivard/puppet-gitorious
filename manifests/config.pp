@@ -328,6 +328,12 @@ class gitorious::config {
       refreshonly => true,
       subscribe   => [Exec["/usr/local/bin/bundle pack"],],
       require     => [Exec["/usr/local/bin/bundle exec rake db:migrate"],];
+      
+    "/usr/local/bin/bundle exec rake ultrasphinx:index":
+      command     => "su -l git -c '/usr/local/bin/bundle exec rake ultrasphinx:index RAILS_ENV=production'",
+      refreshonly => true,
+      subscribe   => [Exec["/usr/local/bin/bundle exec rake ultrasphinx:bootstrap"],],
+      require     => [Exec["/usr/local/bin/bundle exec rake ultrasphinx:bootstrap"],];
 
     "m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf":
       unless  => "test -f /etc/mail/genericstable.db",
