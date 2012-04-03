@@ -223,7 +223,8 @@ class gitorious::config {
       owner   => 'git',
       group   => 'git',
       mode    => '0644',
-      content => "puppet:///modules/gitorious/rails/production.conf";
+      content => "puppet:///modules/gitorious/rails/production.conf",
+      require => [Exec["/usr/local/bin/bundle exec rake ultrasphinx:bootstrap"],];
 
     "/var/www/gitorious/script/git-daemon":
       owner   => 'git',
