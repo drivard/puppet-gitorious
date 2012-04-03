@@ -218,6 +218,12 @@ class gitorious::config {
       mode    => '0755',
       source  => "puppet:///modules/gitorious/config/rails/gitorious_secret.sh",
       require => [File["/usr/src/gitorious.yml"],];
+      
+    "/var/www/gitorious/config/ultrasphinx/production.conf":
+      owner   => 'git',
+      group   => 'git',
+      mode    => '0644',
+      content => "puppet:///modules/gitorious/rails/production.conf";
 
     "/var/www/gitorious/script/git-daemon":
       owner   => 'git',
